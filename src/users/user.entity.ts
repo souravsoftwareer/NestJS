@@ -14,7 +14,8 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column()
-  eotp:String
   
+  @Column({default:''})
+  eotp:string = ''
+
 }
