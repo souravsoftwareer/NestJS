@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDTO } from 'src/users/dto/create-user.dto';
 import { UserBodyDTO } from 'src/users/dto/user-body.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -29,11 +30,23 @@ export class AuthService {
     if(user) {
         throw new HttpException('Email already exists',HttpStatus.FORBIDDEN)
     }
+    userDto.password = await this.hashPassword(userDto.password)
     this.usersService.createUser(userDto)
 
     return {
         message:"User registered !!"
       }
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    const saltRounds = 10; // You can adjust this according to your needs
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+  }
+
+  // Verify a password against a hashed password
+  async comparePasswords(plainTextPassword: string, hashedPassword: string): Promise<boolean> {
+    return bcrypt.compare(plainTextPassword, hashedPassword);
   }
 
 

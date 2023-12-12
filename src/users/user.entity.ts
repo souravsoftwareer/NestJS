@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, BaseEntity, Column, Entity } from "typeorm";
+import { PrimaryGeneratedColumn, BaseEntity, Column, Entity, CreateDateColumn } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
@@ -14,8 +14,13 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  
+  @Column({ type:'int',default:0 })
+  active: number;
+
   @Column({default:''})
-  eotp:string = ''
+  eotp:string
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
 }
