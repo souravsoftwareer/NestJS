@@ -20,6 +20,7 @@ export class AuthService {
     const payload = { sub: user.id, username: user.name }
     return {
       access_token: await this.jwtService.signAsync(payload),
+      user
     };
   }
 
@@ -29,10 +30,10 @@ export class AuthService {
         throw new HttpException('Email already exists',HttpStatus.FORBIDDEN)
     }
     this.usersService.createUser(userDto)
-    
+
     return {
         message:"User registered !!"
-      };
+      }
   }
 
 
