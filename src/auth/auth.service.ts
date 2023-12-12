@@ -13,11 +13,14 @@ export class AuthService {
   ) {}
 
   async signIn(userData:UserBodyDTO) {
-    const user = await this.usersService.getUser(userData.email,userData.password);
+    const user = await this.usersService.getUserByEmail(userData.email);
     if (!user) {
-      throw new UnauthorizedException();
-    }
-  
+        throw new UnauthorizedException();
+      }
+    let validUser = await this.comparePasswords(userData.password,user.password)
+    if (!validUser ) {
+        throw new UnauthorizedException();
+      }
     const payload = { sub: user.id, username: user.name }
     return {
       access_token: await this.jwtService.signAsync(payload),
