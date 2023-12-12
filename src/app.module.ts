@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from "path";
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { join } from "path";
       database: "test_db",
       entities: [join(__dirname, "**", "*.entity.{ts,js}")],
       synchronize: true,
-    })
+    }),
+    AuthModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],
