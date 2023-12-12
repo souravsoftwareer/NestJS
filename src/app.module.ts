@@ -21,6 +21,7 @@ import { UsersModule } from './users/users.module';
       entities: [join(__dirname, "**", "*.entity.{ts,js}")],
       synchronize: true,
     }),
+    
     AuthModule,
     UsersModule
   ],
