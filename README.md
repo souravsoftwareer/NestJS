@@ -62,6 +62,10 @@ $ yarn run test:cov
 
 [Crud Operations](https://circleci.com/blog/getting-started-with-nestjs-and-automatic-testing/) Crud operation.
 
+## set up email service with google oauth2.0
+
+[Email Service](https://blog.iamstarcode.com/how-to-send-emails-using-nestjs-nodemailer-smtp-gmail-and-oauth2) Email service.
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
