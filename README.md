@@ -58,13 +58,13 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
-## set up simple crud operation
+## Set up simple crud operation
 
-[Crud Operations](https://circleci.com/blog/getting-started-with-nestjs-and-automatic-testing/) Crud operation.
+Crud operation using orm model [Crud Operations](https://circleci.com/blog/getting-started-with-nestjs-and-automatic-testing/) 
 
-## set up email service with google oauth2.0
+## Set up email service with google oauth2.0
 
-[Email Service](https://blog.iamstarcode.com/how-to-send-emails-using-nestjs-nodemailer-smtp-gmail-and-oauth2) Email service.
+Setup email service with oauth gmail [Email Service](https://blog.iamstarcode.com/how-to-send-emails-using-nestjs-nodemailer-smtp-gmail-and-oauth2) 
 
 ## Support
 
