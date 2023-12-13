@@ -14,13 +14,15 @@ export class MailingService {
     }
 
     private async setTransport() {
+        try{
         const OAuth2 = google.auth.OAuth2;
         const oauth2Client = new OAuth2(
             this.configService.get('CLIENT_ID'),
             this.configService.get('CLIENT_SECRET'),
             'https://developers.google.com/oauthplayground',
         );
-
+        // log("client id",this.configService.get('CLIENT_ID')) 
+        // log("client id",process.env.CLIENT_ID) 
         oauth2Client.setCredentials({
             refresh_token: process.env.REFRESH_TOKEN,
         });
@@ -32,7 +34,7 @@ export class MailingService {
                 }
                 resolve(token);
             });
-        });
+        })
 
         const config: Options = {
             service: 'gmail',
@@ -42,18 +44,22 @@ export class MailingService {
                 clientId: this.configService.get('CLIENT_ID'),
                 clientSecret: this.configService.get('CLIENT_SECRET'),
                 accessToken,
+                // refreshToken:process.env.REFRESH_TOKEN
             },
         };
         this.mailerService.addTransporter('gmail', config);
+     }catch(err) {
+        log("send mail err ",err)
+     }
     }
 
-    public async sendMail() {
+    public async sendMail(to:string) {
         await this.setTransport();
         this.mailerService
             .sendMail({
                 transporterName: 'gmail',
-                to: 'dummy-reciever@gmail.com', // list of receivers
-                from: 'noreply@nestjs.com', // sender address
+                to, // list of receivers
+                from: process.env.EMAIL, // sender address
                 subject: 'Verficiaction Code', // Subject line
                 template: 'action',
                 context: {
