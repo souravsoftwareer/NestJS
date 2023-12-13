@@ -11,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { APP_PIPE } from '@nestjs/core';
+import { MediaModule } from './media/media.module';
 
 
 @Module({
@@ -42,7 +43,8 @@ import { APP_PIPE } from '@nestjs/core';
           strict: true,
         },
       },
-    })
+    }),
+    MediaModule
   ],
   controllers: [AppController],
   providers: [
