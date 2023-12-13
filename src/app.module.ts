@@ -10,7 +10,8 @@ import { MailingModule } from './mailing/mailing.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { LoggingInterceptor } from './interceptors/LoggingInterceptor';
 
 
 @Module({
@@ -26,7 +27,7 @@ import { APP_PIPE } from '@nestjs/core';
       entities: [join(__dirname, "**", "*.entity.{ts,js}")],
       synchronize: true,
     }),
-    
+
     AuthModule,
     UsersModule,
     MailingModule,
@@ -51,6 +52,10 @@ import { APP_PIPE } from '@nestjs/core';
       provide: APP_PIPE,
       useClass: ValidationPipe,
     },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
   ],
 })
-export class AppModule {}
+export class AppModule { }

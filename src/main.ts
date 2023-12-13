@@ -6,6 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule,{
     rawBody: true,
   });
+  
   const config = new DocumentBuilder()
   .setTitle('Nest Crud Operation')
   .setDescription('Nest Crud API description')

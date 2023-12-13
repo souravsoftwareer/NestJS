@@ -1,4 +1,4 @@
-import { Body, Controller, Post, HttpCode, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, UsePipes, ValidationPipe, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from 'src/users/dto/create-user.dto';
 import { UserBodyDTO } from 'src/users/dto/user-body.dto';
@@ -7,6 +7,7 @@ import { UserBodyDTO } from 'src/users/dto/user-body.dto';
 export class AuthController {
   constructor(private authService: AuthService) { }
 
+  @UseInterceptors()
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe())
   @Post('login')
