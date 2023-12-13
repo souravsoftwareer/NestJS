@@ -7,6 +7,9 @@ import { join } from "path";
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { MailingModule } from './mailing/mailing.module';
+import { ConfigModule } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 
 @Module({
@@ -25,7 +28,20 @@ import { MailingModule } from './mailing/mailing.module';
     
     AuthModule,
     UsersModule,
-    MailingModule
+    MailingModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    MailerModule.forRoot({
+      transport: 'smtps://user@domain.com:pass@smtp.domain.com',
+      template: {
+        dir: process.cwd() + '/templates/',
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true,
+        },
+      },
+    })
   ],
   controllers: [AppController],
   providers: [AppService],
