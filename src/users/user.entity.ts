@@ -1,8 +1,10 @@
-import { PrimaryGeneratedColumn, BaseEntity, Column, Entity, CreateDateColumn } from "typeorm";
+import { ObjectId } from "mongodb";
+import { PrimaryGeneratedColumn, BaseEntity, Column, Entity, CreateDateColumn, ObjectIdColumn, BeforeInsert } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn() // for mysql
+  @ObjectIdColumn() // for mongodb
   id: number;
 
   @Column()
@@ -22,5 +24,12 @@ export class User extends BaseEntity {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+
+  @BeforeInsert()
+  setDefaults() {
+    if (!this.createdAt) {
+      this.createdAt = new Date();
+    }
+  }
 
 }

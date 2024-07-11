@@ -18,14 +18,13 @@ import { MediaModule } from './media/media.module';
   imports: [
     ProductModule,
     TypeOrmModule.forRoot({
-      type: "mysql",
-      host: "127.0.0.1",
-      port: 3306,
-      username: "root",
-      password: "root",
-      database: "test_db",
+      type: 'mongodb',
+      host: 'localhost',
+      port: 27017,
+      database: 'test_db',
       entities: [join(__dirname, "**", "*.entity.{ts,js}")],
-      synchronize: true,
+      "synchronize": true,
+      "useUnifiedTopology": true
     }),
     
     AuthModule,
