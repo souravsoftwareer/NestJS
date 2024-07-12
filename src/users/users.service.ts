@@ -38,8 +38,10 @@ export class UsersService {
     return userData
   }
 
-  async createUser(user:CreateUserDTO):Promise<User> {
-    log("user ",user)
-    return await this.userRepository.save(user)
+  async createUser(createUserDto:CreateUserDTO):Promise<User> {
+    const user = this.userRepository.create(createUserDto);
+    const user_after_save = await this.userRepository.save(user);
+    console.log('User after save:', user_after_save);
+    return user_after_save
   }
 }

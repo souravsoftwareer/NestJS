@@ -16,20 +16,13 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column({ type:'int',default:0 })
-  active: number;
+  @Column()
+  active: number = 0;
 
-  @Column({default:''})
-  eotp:string
+  @Column()
+  eotp: string=''
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt: Date;
-
-  @BeforeInsert()
-  setDefaults() {
-    if (!this.createdAt) {
-      this.createdAt = new Date();
-    }
-  }
-
+  @Column()
+  createdOn: Date = new Date();
+ 
 }
