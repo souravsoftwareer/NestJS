@@ -1,8 +1,8 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDTO } from 'src/users/dto/create-user.dto';
-import { UserBodyDTO } from 'src/users/dto/user-body.dto';
+import { CreateUserDTO } from '../users/dto/create-user.dto';
+import { UserBodyDTO } from '../users/dto/user-body.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
