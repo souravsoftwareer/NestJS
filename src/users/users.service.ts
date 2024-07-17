@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository,MongoRepository } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { log } from 'console';
+
 
 // This should be a real class/interface representing a user entity
 // export type User = any;
@@ -25,11 +26,15 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: MongoRepository<User>
+    // private userRepository: Repository<User>
   ) {}
   async getUser(email: string,password:string): Promise<User | undefined> {
-    let userData = await this.userRepository.findOne( {where: { email,password }})
-    return userData
+    let userData = this.userRepository.aggregate([
+      {$match:{email,password}}
+    ])
+    
+    return userData?.[0]??{}
     // return this.users.find(user => user.username === username);
   }
 
