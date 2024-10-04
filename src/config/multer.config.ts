@@ -5,8 +5,9 @@ import { v4 as uuid } from 'uuid';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { log } from 'console';
 import { ConfigService } from '@nestjs/config';
-require('dotenv').config()
+// import * as dotenv from 'dotenv'
 // Multer configuration
+// dotenv.config({})
 let configService = new ConfigService()
 export const multerConfig = {
     dest: configService.get("UPLOAD_LOCATION"),
