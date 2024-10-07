@@ -9,3 +9,7 @@ NodeJS topics
 7. Multiple versioning (pending)
 8. File upload on s3 (pending)
 9. Websocket (pending)
+10. Winston Logging (pending)
+11. Interceptor (done)
+12. Swagger (done)
+13. Test cases (pending)

@@ -1,7 +1,8 @@
-import { Body, Controller, Post, HttpCode, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode, HttpStatus, UsePipes, ValidationPipe, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDTO } from 'src/users/dto/create-user.dto';
-import { UserBodyDTO } from 'src/users/dto/user-body.dto';
+import { CreateUserDTO } from '../users/dto/create-user.dto';
+import { UserBodyDTO } from '../users/dto/user-body.dto';
+import { LoggingInterceptor } from '../interceptors/LoggingInterceptor';
 
 @Controller('auth')
 export class AuthController {
@@ -9,6 +10,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe())
+  @UseInterceptors(LoggingInterceptor)
   @Post('login')
   signIn(@Body() signInDto: UserBodyDTO) {
     return this.authService.signIn(signInDto);
@@ -17,7 +19,7 @@ export class AuthController {
   
   @Post("register")
   @UsePipes(new ValidationPipe())
-
+  @UseInterceptors(LoggingInterceptor)
   register(@Body() userDto: CreateUserDTO) {
     return this.authService.register(userDto)
   }
