@@ -8,10 +8,7 @@ import { ConfigService } from '@nestjs/config';
 // import * as dotenv from 'dotenv'
 // Multer configuration
 // dotenv.config({})
-let configService = new ConfigService()
-export const multerConfig = {
-    dest: configService.get("UPLOAD_LOCATION"),
-};
+
 
 // Multer upload options
 export const multerOptions = {
@@ -33,9 +30,13 @@ export const multerOptions = {
     storage: diskStorage({
         // Destination storage path details
         destination: (req: any, file: any, cb: any) => {
-            const uploadPath = multerConfig.dest;
+            console.log('upload path ',process.env.UPLOAD_LOCATION)
+            const uploadPath = process.env.UPLOAD_LOCATION;
             // Create folder if doesn't exist
             log("uploadPath ",uploadPath)
+            if(!uploadPath) {
+                cb(new HttpException(`Upload location not found`, HttpStatus.BAD_REQUEST), false);
+            }
             if (!existsSync(uploadPath)) {
                 mkdirSync(uploadPath);
             }
