@@ -14,7 +14,12 @@ import { APP_PIPE } from '@nestjs/core';
 import { MediaModule } from './media/media.module';
 import { ConfigurationModule } from './config/configuration.module';
 import { ParameterStoreService } from './config/parameter-store/parameter-store.service'; // Import your service
+import * as dotenv from 'dotenv';
 
+// Load the appropriate .env file based on NODE_ENV
+const nodeEnv = process.env.NODE_ENV || 'dev'; // Default to development
+const envFilePath = nodeEnv === 'prod' ? '.env.prod' : '.env';
+dotenv.config({ path: envFilePath });
 
 @Module({
   imports: [
