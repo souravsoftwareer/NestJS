@@ -15,11 +15,12 @@ export class ParameterStoreService {
   async getParameter(path: string): Promise<string | undefined> {
     try {
       const parameters = await AWSParamStore.getParameterSync(path, {
-        region: process.env.AWS_REGION,
-        withDecryption: true,
+        region: process.env.AWS_REGION
       });
-      
-      return parameters[0]?.Value;
+      let value = parameters?.Value??"" 
+      console.log("path ",path," value ",value)
+      return value
+     
     } catch (error) {
       console.error('Error loading parameters from AWS Parameter Store', error);
       return undefined;

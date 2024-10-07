@@ -18,38 +18,29 @@ import { ParameterStoreService } from './config/parameter-store/parameter-store.
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    // ConfigurationModule,
     ProductModule,
+    ConfigurationModule, // Import it here
     TypeOrmModule.forRootAsync({
-      // type: 'mongodb',
-      // host: 'localhost',
-      // port: 27017,
-      // database: 'test_db',
-      // entities: [join(__dirname, "**", "*.entity.{ts,js}")],
-      // "synchronize": true,
-      // "useUnifiedTopology": true
-      imports: [ConfigModule], // Ensure ConfigModule is imported
-      inject: [ParameterStoreService],
+      inject: [ParameterStoreService], // Inject the service
       useFactory: async (parameterStoreService: ParameterStoreService) => {
         const dbUri = await parameterStoreService.getParameter('MONGODB_URL');
-        console.log('dbUri ',dbUri)
         return {
           type: 'mongodb',
-          url: dbUri,  // Use the dynamically fetched DB URI
+          url: dbUri,
           synchronize: true,
           useUnifiedTopology: true,
           entities: [join(__dirname, '**', '*.entity.{ts,js}')],
         };
       },
-      // }),
     }),
-    
     AuthModule,
     UsersModule,
     MailingModule,
-    ConfigurationModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    
     MailerModule.forRoot({
       transport: 'smtps://user@domain.com:pass@smtp.domain.com',
       template: {
@@ -60,8 +51,7 @@ import { ParameterStoreService } from './config/parameter-store/parameter-store.
         },
       },
     }),
-    MediaModule,
-    ConfigModule
+    MediaModule
   ],
   controllers: [AppController],
   providers: [
