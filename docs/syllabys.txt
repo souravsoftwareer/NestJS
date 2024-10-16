@@ -7,7 +7,7 @@ NodeJS topics
 5. DB linking with mysql and mongodb (done)
 6. Different env and parameter store (done)
 7. Multiple versioning (pending)
-8. File upload on s3 (pending)
+8. File upload on s3 (done)
 9. Websocket (pending)
 10. Winston Logging (pending)
 11. Interceptor (done)
