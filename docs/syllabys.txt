@@ -5,7 +5,7 @@ NodeJS topics
 3. SMTP (done)
 4. File upload (done)
 5. DB linking with mysql and mongodb (done)
-6. Different env and parameter store (pending)
+6. Different env and parameter store (done)
 7. Multiple versioning (pending)
 8. File upload on s3 (pending)
 9. Websocket (pending)

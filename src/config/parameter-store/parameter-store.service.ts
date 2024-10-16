@@ -14,6 +14,10 @@ export class ParameterStoreService {
 
   async getParameter(path: string): Promise<string | undefined> {
     try {
+      console.log('env ==>',this.environment)
+      if(this.environment === 'dev') {
+        path = path+"-"+this.environment
+      }
       const parameters = await AWSParamStore.getParameterSync(path, {
         region: process.env.AWS_REGION
       });
