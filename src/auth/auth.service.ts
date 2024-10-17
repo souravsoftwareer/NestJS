@@ -13,6 +13,7 @@ export class AuthService {
   ) {}
 
   async signIn(userData:UserBodyDTO) {
+    
     const user = await this.usersService.getUserByEmail(userData.email);
     if (!user) {
         throw new UnauthorizedException();
@@ -26,6 +27,23 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
       user
     };
+  }
+
+  async login(user: any) {
+    const payload = { username: user.username, sub: user._id };
+    
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.usersService.getUserByEmail(username);
+    if (user && bcrypt.compareSync(pass, user.password)) {
+      const { password, ...result } = user;
+      return result;
+    }
+    return null;
   }
 
   async register(userDto:CreateUserDTO) {

@@ -1,4 +1,4 @@
-import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler, Logger } from '@nestjs/common';
 import { log } from 'console';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -11,11 +11,12 @@ export class LoggingInterceptor implements NestInterceptor {
       let logPath = process.cwd() + "<path>" + logFile;
 
       let { url, method, headers, body } = context.switchToHttp().getRequest();
-
+      
+      let logMessage = "\n\n=======================================\n\nTIME: " + Date().toString() + "\nMETHOD: " + JSON.stringify(method) + "\nURL: " + JSON.stringify(url) + "\nHEADERS: " + JSON.stringify(headers) + "\nBODY: " + JSON.stringify(body) + "\nRESPONSE: ";
+      Logger.log(logMessage)
       if (url != "/logs/dev.log")
       {
-          let logMessage = "\n\n=======================================\n\nTIME: " + Date().toString() + "\nMETHOD: " + JSON.stringify(method) + "\nURL: " + JSON.stringify(url) + "\nHEADERS: " + JSON.stringify(headers) + "\nBODY: " + JSON.stringify(body) + "\nRESPONSE: ";
-
+          
           return next.handle().pipe(tap((data) => 
           {
               let responseBody = JSON.stringify(data);
@@ -26,7 +27,7 @@ export class LoggingInterceptor implements NestInterceptor {
               // logMessage += fs.readFileSync(logPath);
 
               // fs.writeFile(logPath, logMessage, function (err, file) { });
-              log(logMessage)
+              console.log(logMessage)
           }));
       }
   }

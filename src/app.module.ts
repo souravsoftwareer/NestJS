@@ -18,6 +18,8 @@ import * as fileUpload from 'express-fileupload';
 import * as dotenv from 'dotenv';
 import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+import { LocalStrategy } from './auth/strategy/local.strategy'; 
+import { JwtStrategy } from './auth/strategy/jwt.strategy'; 
 
 // Load the appropriate .env file based on NODE_ENV
 const nodeEnv = process.env.NODE_ENV || 'dev'; // Default to development
@@ -67,6 +69,8 @@ dotenv.config({ path: envFilePath });
   ],
   controllers: [AppController],
   providers: [
+    JwtStrategy,
+    LocalStrategy,
     AppService,
     {
       provide: APP_PIPE,

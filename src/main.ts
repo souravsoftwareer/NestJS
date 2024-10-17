@@ -9,6 +9,7 @@ async function bootstrap() {
   const PORT = process.env.PORT||3000
   const app = await NestFactory.create(AppModule,{
     rawBody: true,
+    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
   const config = new DocumentBuilder()
   .setTitle('Nest Crud Operation')
