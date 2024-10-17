@@ -22,7 +22,7 @@ export class ProductService {
   }
 
   public async getProduct(productId: string): Promise<Product> {
-    console.log('produc id',productId)
+    console.log('product id',productId)
     return await this.productRepository.findOne({
       where: { _id: productId },
     });

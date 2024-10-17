@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Patch, Param, Delete, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Controller, Post, Body, Get, Patch, Param, Delete, UseGuards, UseInterceptors, Request } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDTO } from "./dto/create-product.dto";
 import { Product } from "./product.entity";
@@ -20,7 +20,9 @@ export class ProductController {
   @UseInterceptors(LoggingInterceptor)
   @UseGuards(JwtAuthGuard)
   @Get("all")
-  public async getProducts(): Promise<Product[]> {
+  public async getProducts(@Request() req): Promise<Product[]> {
+    const user = req.user; // This is the user data attached by JwtStrategy
+    console.log('Decoded JWT data:', user); // Debug log
     const products = await this.productService.getProducts();
     return products;
   }

@@ -23,7 +23,7 @@ export class AuthController {
   @UseInterceptors(LoggingInterceptor)
   @UseGuards(LocalAuthGuard)
   @Post('loginPassport')
-  signPassport(@Request() req) {
+  signPassport(@Body() req) {
     Logger.log('signPassport in log')
     return this.authService.login(req);
   }
