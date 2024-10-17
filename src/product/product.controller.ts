@@ -1,8 +1,10 @@
-import { Controller, Post, Body, Get, Patch, Param, Delete, UseGuards } from "@nestjs/common";
+import { Controller, Post, Body, Get, Patch, Param, Delete, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDTO } from "./dto/create-product.dto";
 import { Product } from "./product.entity";
-import { AuthGuard } from "src/auth/auth.guard";
+import { AuthGuard } from "../auth/guards/auth.guard";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import { LoggingInterceptor } from "src/interceptors/LoggingInterceptor";
 
 @Controller("product")
 export class ProductController {
@@ -14,8 +16,8 @@ export class ProductController {
     const product = await this.productService.createProduct(createProductDto);
     return product;
   }
-
-  @UseGuards(AuthGuard)
+  @UseInterceptors(LoggingInterceptor)
+  @UseGuards(JwtAuthGuard)
   @Get("all")
   public async getProducts(): Promise<Product[]> {
     const products = await this.productService.getProducts();
