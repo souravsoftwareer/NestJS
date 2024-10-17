@@ -1,27 +1,30 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Product } from "./product.entity";
 import { CreateProductDTO } from "./dto/create-product.dto";
-import { Repository } from "typeorm";
+import { Repository,MongoRepository } from "typeorm";
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product)
-    private productRepository: Repository<Product>
+    private productRepository: MongoRepository<Product>
   ) {}
 
   public async createProduct(createProductDto: CreateProductDTO): Promise<Product> {
-    return await this.productRepository.save(createProductDto);
+    let product = this.productRepository.create(createProductDto)
+    Logger.log("before save ",product)
+    return await this.productRepository.save(product);
   }
 
   public async getProducts(): Promise<Product[]> {
     return await this.productRepository.find();
   }
 
-  public async getProduct(productId: number): Promise<Product> {
+  public async getProduct(productId: string): Promise<Product> {
+    console.log('produc id',productId)
     return await this.productRepository.findOne({
-      where: { id: productId },
+      where: { _id: productId },
     });
   }
 

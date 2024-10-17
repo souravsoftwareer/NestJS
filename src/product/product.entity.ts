@@ -1,8 +1,9 @@
-import { PrimaryGeneratedColumn, BaseEntity, Column, Entity } from "typeorm";
+import { PrimaryGeneratedColumn, BaseEntity, Column, Entity, ObjectIdColumn } from "typeorm";
 
 @Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @ObjectIdColumn() // for mongodb
   id: number;
 
   @Column()

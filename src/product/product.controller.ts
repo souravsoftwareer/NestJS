@@ -10,7 +10,8 @@ import { LoggingInterceptor } from "src/interceptors/LoggingInterceptor";
 export class ProductController {
   constructor(private productService: ProductService) {}
 
-  @UseGuards(AuthGuard)
+  @UseInterceptors(LoggingInterceptor)
+  @UseGuards(JwtAuthGuard)
   @Post("create")
   public async createProduct(@Body() createProductDto: CreateProductDTO): Promise<Product> {
     const product = await this.productService.createProduct(createProductDto);
@@ -24,14 +25,14 @@ export class ProductController {
     return products;
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get("/:productId")
-  public async getProduct(@Param("productId") productId: number) {
+  public async getProduct(@Param("productId") productId: string) {
     const product = await this.productService.getProduct(productId);
     return product;
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch("/edit/:productId")
   public async editProduct(
     @Body() createProductDto: CreateProductDTO,
@@ -41,7 +42,7 @@ export class ProductController {
     return product;
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete("/delete/:productId")
   public async deleteProduct(@Param("productId") productId: number) {
     const deletedProduct = await this.productService.deleteProduct(productId);

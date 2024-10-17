@@ -1,7 +1,7 @@
 NodeJS topics
 
 1. Authentication (done)
-2. Authentication with passport (pending)
+2. Authentication with passport (done)
 3. SMTP (done)
 4. File upload (done)
 5. DB linking with mysql and mongodb (done)
