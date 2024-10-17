@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "dfbdb8e8-fa83-4217-b955-3e4edfc70b0e",
 		"name": "NestJS Demo",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "30805715"
 	},
 	"item": [
@@ -11,6 +11,19 @@
 			"item": [
 				{
 					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"access_token\", \"Bearer \"+jsonData?.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -23,7 +36,54 @@
 								}
 							}
 						},
-						"url": "{{url}}auth/login"
+						"url": {
+							"raw": "{{url}}auth/login",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User Passport",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"access_token\", \"Bearer \"+jsonData?.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"username\":\"test@yopmail.com\",\n \"password\":\"123456\"   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/loginPassport",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"loginPassport"
+							]
+						}
 					},
 					"response": []
 				},
@@ -41,7 +101,15 @@
 								}
 							}
 						},
-						"url": "{{url}}auth/register"
+						"url": {
+							"raw": "{{url}}auth/register",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"register"
+							]
+						}
 					},
 					"response": []
 				}
@@ -54,17 +122,31 @@
 					"name": "Create Product",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":\"Amul\",\n  \"description\":\"Milk product\",\n  \"price\":30  \n}",
+							"raw": "{\n  \"name\":\"Amul\",\n  \"description\":\"Milk product\",\n  \"price\":\"30\"  \n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{url}}product/create"
+						"url": {
+							"raw": "{{url}}product/create",
+							"host": [
+								"{{url}}product"
+							],
+							"path": [
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
@@ -72,8 +154,22 @@
 					"name": "Get All Product",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": "{{url}}product/all"
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}product/all",
+							"host": [
+								"{{url}}product"
+							],
+							"path": [
+								"all"
+							]
+						}
 					},
 					"response": []
 				},
@@ -81,8 +177,22 @@
 					"name": "Get Single Product",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": "{{url}}product/1"
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}product/6710d85785e48daf7cb92252",
+							"host": [
+								"{{url}}product"
+							],
+							"path": [
+								"6710d85785e48daf7cb92252"
+							]
+						}
 					},
 					"response": []
 				}
@@ -104,9 +214,22 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\":\"test@gmail.com\"  \n}"
+							"raw": "{\n  \"email\":\"test@yopmail.com\"  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						"url": "{{url}}mailing/send-mail"
+						"url": {
+							"raw": "{{url}}mailing/send-mail",
+							"host": [
+								"{{url}}mailing"
+							],
+							"path": [
+								"send-mail"
+							]
+						}
 					},
 					"response": []
 				}
@@ -126,11 +249,53 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/Users/john/Desktop/Screenshot 2023-12-08 at 6.18.03 PM.png"
+									"src": "/Users/john/Downloads/Logo-Sqaure-W (1).png"
 								}
 							]
 						},
-						"url": "{{url}}media/upload"
+						"url": {
+							"raw": "{{url}}media/upload",
+							"host": [
+								"{{url}}media"
+							],
+							"path": [
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "File Upload S3",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/john/Desktop/Screenshot 2024-10-07 at 11.18.46 AM.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}media/upload/s3",
+							"host": [
+								"{{url}}media"
+							],
+							"path": [
+								"upload",
+								"s3"
+							]
+						}
 					},
 					"response": []
 				}
@@ -160,6 +325,11 @@
 	"variable": [
 		{
 			"key": "url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
 			"value": "",
 			"type": "string"
 		}
